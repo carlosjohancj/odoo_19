@@ -10,7 +10,7 @@ COPY ./addons /mnt/extra-addons
 
 # COPIA DEL CONFIG: 
 # Si tu archivo está en la raíz, deja esta línea:
-COPY ./odoo.conf /etc/odoo/odoo.conf
+COPY ./config/odoo.conf /etc/odoo/odoo.conf
 
 # Si tu archivo está dentro de una carpeta llamada 'config', usa esta:
 # COPY ./config/odoo.conf /etc/odoo/odoo.conf
