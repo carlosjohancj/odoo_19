@@ -1,24 +1,17 @@
+# Usa la imagen oficial de Odoo 19 como base
 FROM odoo:19.0
 
+# Cambiar a root para instalar dependencias o copiar archivos
 USER root
 
-# Listar archivos para depuración (esto saldrá en el log de Dokploy si falla)
-RUN ls -R /
-
-# Copiamos la carpeta de módulos (esta parece que sí la encuentra bien)
+# Copiar tus módulos personalizados a la carpeta de addons extra
 COPY ./addons /mnt/extra-addons
 
-# COPIA DEL CONFIG: 
-# Si tu archivo está en la raíz, deja esta línea:
-COPY ./config/odoo.conf /etc/odoo/odoo.conf
+# Asegurar permisos (opcional pero recomendado)
+RUN chown -R odoo:odoo /mnt/extra-addons
 
-# Si tu archivo está dentro de una carpeta llamada 'config', usa esta:
-# COPY ./config/odoo.conf /etc/odoo/odoo.conf
-
-RUN chown -R odoo:odoo /mnt/extra-addons /etc/odoo/odoo.conf
-
+# Volver al usuario odoo
 USER odoo
 
-# Forzamos a Odoo a leer el archivo y las variables de entorno
-ENTRYPOINT ["odoo"]
-CMD ["-c", "/etc/odoo/odoo.conf"]
+# Exponer puerto (ya lo hace la imagen base, pero por claridad)
+EXPOSE 8069
