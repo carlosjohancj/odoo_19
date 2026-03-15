@@ -1,17 +1,17 @@
-# Usa la imagen oficial de Odoo 19 como base
 FROM odoo:19.0
 
-# Cambiar a root para instalar dependencias o copiar archivos
 USER root
 
-# Copiar tus módulos personalizados a la carpeta de addons extra
+# Copiamos tus módulos personalizados
 COPY ./addons /mnt/extra-addons
 
-# Asegurar permisos (opcional pero recomendado)
-RUN chown -R odoo:odoo /mnt/extra-addons
+# Copiamos el archivo de configuración
+COPY ./odoo.conf /etc/odoo/odoo.conf
 
-# Volver al usuario odoo
+# Aseguramos permisos para el usuario odoo
+RUN chown -R odoo:odoo /mnt/extra-addons /etc/odoo/odoo.conf
+
 USER odoo
 
-# Exponer puerto (ya lo hace la imagen base, pero por claridad)
-EXPOSE 8069
+# Este comando le dice a Odoo explícitamente qué archivo usar
+CMD ["odoo", "-c", "/etc/odoo/odoo.conf"]
