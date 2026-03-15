@@ -2,7 +2,6 @@
 services:
   db:
     image: postgres:18
-    container_name: odoo19_db
     restart: always
     environment:
       POSTGRES_DB: postgres
@@ -18,7 +17,6 @@ services:
 
   odoo:
     build: .
-    container_name: odoo19_app
     restart: always
     depends_on:
       db:
